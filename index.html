@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Configuración básica del documento: codificación de caracteres (tildes, ñ) y vista adaptable a celulares -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al2 Bazar - Catálogo Online</title>
+
+  <!-- Importación de Tailwind CSS desde CDN (permite estilizar usando clases directamente en el HTML) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Importación de tipografías desde Google Fonts: 'Plus Jakarta Sans' (general) y 'Great Vibes' (cursiva navideña) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Configuración personalizada de Tailwind: vinculamos nuestras fuentes y creamos una paleta dinámica llamada 'bazar' -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { 
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            festive: ['"Great Vibes"', 'cursive']
+          },
+          // En lugar de colores fijos, apuntamos a variables CSS (--bazar-xxx).
+          // Así, si cambiamos el valor de esas variables en CSS, toda la web cambia de color al instante.
+          colors: {
+            bazar: {
+              50: 'var(--bazar-50)',
+              100: 'var(--bazar-100)',
+              200: 'var(--bazar-200)',
+              300: 'var(--bazar-300)',
+              400: 'var(--bazar-400)',
+              500: 'var(--bazar-500)',
+              600: 'var(--bazar-600)',
+              700: 'var(--bazar-700)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       1. VARIABLES DE TEMA (PALETA DE COLORES)
+       ========================================================================== */
+    /* :root define los valores por defecto (el tema rosa pastel de todo el año) */
+    :root {
+      --bazar-50: #fff5f7;
+      --bazar-100: #ffe4e9;
+      --bazar-200: #fecdd6;
+      --bazar-300: #fea3b4;
+      --bazar-400: #fc708d;
+      --bazar-500: #f43f68;
+      --bazar-600: #e11d4d;
+      --bazar-700: #be123c;
+    }
+
+    /* Cuando JavaScript le agrega la clase 'tema-navidad' al <body>, se sobrescriben las variables
+       y se aplica un fondo SVG repetitivo (patrón mosaico) codificado en URL data. */
+    body.tema-navidad {
+      --bazar-50: #ffd6e5;
+      --bazar-100: #ffe8f0;
+      --bazar-200: #f9b8d0;
+      --bazar-300: #f48fb1;
+      --bazar-400: #e11d48;
+      --bazar-500: #d91b42;
+      --bazar-600: #9f1239;
+      --bazar-700: #15803d;
+      
+      background-color: #ffd6e5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none'%3E%3Cg stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' opacity='0.65'%3E%3Cpath d='M45 20v36M27 38h36M32 25l26 26M58 25L32 51'/%3E%3Ccircle cx='45' cy='38' r='5' fill='%23ffd6e5'/%3E%3C/g%3E%3Cg stroke='%23f48fb1' stroke-width='2' stroke-linecap='round' opacity='0.55'%3E%3Cpath d='M185 155v30M170 170h30M174 159l22 22M196 159l-22 22'/%3E%3C/g%3E%3Cg transform='translate(145, 22) rotate(18)' opacity='0.85'%3E%3Cpath d='M8 32V12a8 8 0 0 1 16 0v4' stroke='%23ffffff' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M8 32V12a8 8 0 0 1 16 0v4' stroke='%23dc2626' stroke-width='7' stroke-linecap='round' stroke-dasharray='5 6'/%3E%3C/g%3E%3Cg transform='translate(195, 75) rotate(-15)' opacity='0.85'%3E%3Crect x='0' y='6' width='24' height='22' rx='3' fill='%2315803d'/%3E%3Cpath d='M12 6v22M0 17h24' stroke='%23ffffff' stroke-width='2.5'/%3E%3Cpath d='M12 6c-4-5-9-2-6 1h6zm0 0c4-5 9-2 6 1h-6z' stroke='%23ffffff' stroke-width='2'/%3E%3C/g%3E%3Cg transform='translate(105, 105)' opacity='0.85'%3E%3Crect x='11' y='0' width='6' height='4' rx='1' fill='%23eab308'/%3E%3Ccircle cx='14' cy='17' r='13' fill='%2315803d'/%3E%3Cpath d='M2 17q6-5 12 0t12 0' stroke='%23dc2626' stroke-width='3.5' fill='none'/%3E%3Ccircle cx='9' cy='11' r='1.5' fill='%23ffffff'/%3E%3Ccircle cx='19' cy='23' r='1.5' fill='%23ffffff'/%3E%3C/g%3E%3Cg transform='translate(28, 155) rotate(-12)' opacity='0.85'%3E%3Cpath d='M8 4h14v18c0 6-4 10-12 10H4a5 5 0 0 1 0-10h4V4z' fill='%23dc2626'/%3E%3Crect x='6' y='2' width='18' height='6' rx='3' fill='%23ffffff'/%3E%3C/g%3E%3Cpath d='M105 32l3 8 8 3-8 3-3 8-3-8-8-3 8-3z' fill='%23ffffff' opacity='0.75'/%3E%3Cpath d='M45 108l2.5 6.5 6.5 2.5-6.5 2.5-2.5 6.5-2.5-6.5-6.5-2.5 6.5-2.5z' fill='%23ffffff' opacity='0.75'/%3E%3Cpath d='M138 195l3 7 7 3-7 3-3 7-3-7-7-3 7-3z' fill='%23ffffff' opacity='0.75'/%3E%3Cpath d='M82 78c-2-3-6-2-6 1 0 3 6 7 6 7s6-4 6-7c0-3-4-4-6-1z' fill='%23dc2626' opacity='0.75'/%3E%3Cpath d='M218 215c-2-3-6-2-6 1 0 3 6 7 6 7s6-4 6-7c0-3-4-4-6-1z' fill='%23f43f5e' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 240px 240px;
+    }
+
+    /* ==========================================================================
+       2. ANIMACIONES DE PARTÍCULAS Y LUCES NAVIDEÑAS
+       ========================================================================== */
+    /* @keyframes define los fotogramas clave de caída y rotación de cada estrella */
+    @keyframes caerEstrellas {
+      0% { transform: translateY(-10vh) rotate(0deg) scale(0.9); opacity: 0; }
+      15% { opacity: 0.32; }
+      50% { opacity: 0.22; }
+      85% { opacity: 0.32; }
+      100% { transform: translateY(105vh) rotate(220deg) scale(1); opacity: 0; }
+    }
+    .estrella-cayendo {
+      position: fixed;
+      top: -20px;
+      user-select: none;     /* Evita que el usuario seleccione la estrella como texto */
+      pointer-events: none;  /* Fundamental: hace que los clics atraviesen la estrella hacia los botones de abajo */
+      z-index: 5;            /* Capa baja para pasar por detrás de las tarjetas de productos (que tienen z-10) */
+      filter: drop-shadow(0 0 4px rgba(254, 240, 138, 0.65));
+      animation: caerEstrellas linear infinite;
+    }
+
+    /* Contenedor flex horizontal para la guirnalda de luces */
+    .guirnalda {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      width: 100%;
+      overflow: hidden;
+      height: 22px;
+      pointer-events: none;
+      border-top: 2px solid #166534;
+    }
+    /* Forma de cada bombita individual */
+    .foco {
+      width: 10px;
+      height: 15px;
+      border-radius: 50% 50% 50% 50% / 35% 35% 65% 65%;
+      margin-top: -1px;
+      position: relative;
+      animation: titilar 1.6s infinite alternate;
+    }
+    /* Casquillo superior de cada bombita creado con pseudoelemento ::before */
+    .foco::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: 2.5px;
+      width: 5px;
+      height: 4px;
+      background: #14532d;
+      border-radius: 1px;
+    }
+    /* Alternancia de 4 colores usando aritmética modular (:nth-child(4n + k)) y desfases de tiempo */
+    .foco:nth-child(4n+1) { background: #ef4444; box-shadow: 0 2px 8px #ef4444; animation-delay: 0s; }
+    .foco:nth-child(4n+2) { background: #eab308; box-shadow: 0 2px 8px #eab308; animation-delay: 0.4s; }
+    .foco:nth-child(4n+3) { background: #22c55e; box-shadow: 0 2px 8px #22c55e; animation-delay: 0.8s; }
+    .foco:nth-child(4n+4) { background: #3b82f6; box-shadow: 0 2px 8px #3b82f6; animation-delay: 1.2s; }
+
+    @keyframes titilar {
+      0% { opacity: 0.45; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1.06); }
+    }
+  </style>
+</head>
+<body class="bg-bazar-50 text-stone-800 min-h-screen flex flex-col font-sans transition-colors duration-500">
+
+  <!-- Contenedor vacío donde JS inyectará las estrellitas si es época navideña -->
+  <div id="estrellasContainer"></div>
+
+  <!-- Banner superior navideño (arranca con clase 'hidden' y JS lo muestra solo en fecha) -->
+  <div id="xmasBanner" class="hidden relative z-20 bg-gradient-to-r from-[#be123c] via-[#15803d] to-[#be123c] text-white text-center py-2 px-4 shadow-sm flex flex-wrap items-center justify-center gap-2">
+    <span class="font-festive text-2xl sm:text-3xl text-amber-200 drop-shadow leading-none pt-0.5">¡Feliz Navidad!</span>
+    <span class="text-xs font-medium text-white/95">✨ Descubrí los mejores regalos y deco en Al2 Bazar 🎄</span>
+  </div>
+
+  <!-- Encabezado fijo (sticky top-0) que acompaña al hacer scroll -->
+  <header class="bg-white/95 backdrop-blur sticky top-0 z-40 border-b border-bazar-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div>
+          <h1 id="brandTitle" class="text-2xl font-bold tracking-tight text-bazar-600">Al2 Bazar</h1>
+          <p class="text-xs text-stone-500 font-medium">Catálogo & Pedidos por WhatsApp</p>
+        </div>
+      </div>
+      
+      <!-- Botón que abre el panel lateral del carrito -->
+      <button onclick="toggleCart(true)" class="relative flex items-center gap-2 bg-bazar-500 hover:bg-bazar-600 text-white px-4 py-2 rounded-full font-semibold shadow-sm transition">
+        <span>🛒 Mi Pedido</span>
+        <span id="cartBadge" class="bg-white text-bazar-600 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+      </button>
+    </div>
+
+    <!-- Contenedor donde JS dibujará los foquitos de colores en Navidad -->
+    <div id="xmasLights" class="guirnalda hidden"></div>
+  </header>
+
+  <!-- Sección de Controles: Buscador, Categorías, Switch de Stock y Ordenamiento -->
+  <section class="max-w-6xl mx-auto px-4 pt-5 pb-4 w-full relative z-10">
+    <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+      
+      <!-- Buscador por texto + Menú desplegable de categorías -->
+      <div class="flex flex-col sm:flex-row gap-2.5 flex-1">
+        <div class="relative flex-1">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Buscar producto..." 
+            class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-bazar-200 bg-white/95 backdrop-blur focus:outline-none focus:ring-2 focus:ring-bazar-400 text-sm shadow-sm"
+            oninput="filtrarProductos()"
+          >
+          <span class="absolute left-3.5 top-2.5 text-bazar-400">🔍</span>
+        </div>
+
+        <div class="relative sm:w-64">
+          <select 
+            id="categorySelect" 
+            onchange="filtrarProductos()" 
+            class="w-full appearance-none bg-white/95 backdrop-blur border border-bazar-200 rounded-xl pl-3.5 pr-9 py-2.5 text-sm font-semibold text-stone-700 focus:outline-none focus:ring-2 focus:ring-bazar-400 shadow-sm cursor-pointer"
+          >
+            <option value="Todas">Todas las categorías</option>
+          </select>
+          <span class="pointer-events-none absolute right-3 top-3 text-bazar-500 text-xs">▼</span>
+        </div>
+      </div>
+
+      <!-- Interruptor "Solo con Stock" + Selector de Orden -->
+      <div class="flex gap-2 items-center justify-between sm:justify-end">
+        <label class="inline-flex items-center cursor-pointer bg-white/95 backdrop-blur px-3.5 py-2.5 rounded-xl border border-bazar-200 text-xs font-semibold text-stone-600 select-none shadow-sm">
+          <input type="checkbox" id="stockOnly" class="sr-only peer" onchange="filtrarProductos()">
+          <div class="w-8 h-4 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-bazar-500 relative mr-2"></div>
+          Solo con Stock
+        </label>
+
+        <select id="sortSelect" onchange="filtrarProductos()" class="bg-white/95 backdrop-blur border border-bazar-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-stone-600 focus:outline-none focus:ring-2 focus:ring-bazar-300 shadow-sm cursor-pointer">
+          <option value="default">Orden original</option>
+          <option value="price-asc">Menor precio</option>
+          <option value="price-desc">Mayor precio</option>
+          <option value="alpha">A - Z</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenedor Principal donde se renderizan las tarjetas de productos -->
+  <main class="max-w-6xl mx-auto px-4 pb-12 flex-1 w-full relative z-10">
+    <!-- Mensaje inicial mientras se descargan los datos del Google Sheet -->
+    <div id="statusMessage" class="text-center py-16 text-stone-600 font-medium text-sm bg-white/80 rounded-2xl backdrop-blur-sm">
+      Cargando catálogo e imágenes...
+    </div>
+    
+    <!-- Grilla responsive: 2 columnas en celular, 3 en tablet, 4 en PC -->
+    <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 hidden"></div>
+
+    <!-- Contador inferior de productos filtrados -->
+    <div id="countDisplay" class="text-center text-xs font-semibold text-stone-600 bg-white/85 backdrop-blur-sm py-1.5 px-4 rounded-full w-fit mx-auto mt-6 hidden shadow-sm"></div>
+  </main>
+
+  <!-- Modal Lightbox para ver la foto del producto ampliada en pantalla completa -->
+  <div id="zoomModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4" onclick="cerrarZoom(event)">
+    <!-- stopPropagation() evita que hacer clic sobre la imagen o botones cierre el modal -->
+    <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+      <button onclick="cerrarZoom()" class="absolute -top-10 right-0 text-white hover:text-bazar-300 text-3xl font-bold leading-none p-1">&times;</button>
+      
+      <img id="zoomImg" src="" alt="Zoom Producto" class="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl bg-white/5 select-none">
+      
+      <div id="zoomControls" class="flex items-center justify-between w-full mt-3 px-2">
+        <button onclick="cambiarFotoZoom(-1)" class="bg-white/20 hover:bg-white/40 text-white px-3 py-1.5 rounded-full font-bold text-sm backdrop-blur transition flex items-center gap-1">
+          ‹ Anterior
+        </button>
+        <span id="zoomCounter" class="text-white text-xs bg-black/50 px-3 py-1 rounded-full font-semibold">1/1</span>
+        <button onclick="cambiarFotoZoom(1)" class="bg-white/20 hover:bg-white/40 text-white px-3 py-1.5 rounded-full font-bold text-sm backdrop-blur transition flex items-center gap-1">
+          Siguiente ›
+        </button>
+      </div>
+      <p id="zoomTitle" class="text-white/90 text-sm font-semibold text-center mt-2 px-4 line-clamp-1"></p>
+    </div>
+  </div>
+
+  <!-- Modal Lateral Deslizable del Carrito de Compras -->
+  <div id="cartModal" class="fixed inset-0 z-50 overflow-hidden hidden">
+    <div class="absolute inset-0 bg-stone-900/40 backdrop-blur-sm transition-opacity" onclick="toggleCart(false)"></div>
+    <div class="fixed inset-y-0 right-0 max-w-full flex">
+      <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+        <div class="p-4 border-b border-stone-100 flex items-center justify-between bg-bazar-100">
+          <h2 class="text-lg font-bold text-stone-800 flex items-center gap-2">🛒 Tu Pedido</h2>
+          <button onclick="toggleCart(false)" class="text-stone-400 hover:text-stone-600 text-2xl leading-none">&times;</button>
+        </div>
+
+        <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+
+        <div class="p-4 border-t border-stone-100 bg-stone-50 space-y-3">
+          <div class="flex justify-between items-center text-base font-bold text-stone-800">
+            <span>Total:</span>
+            <span id="cartTotal" class="text-bazar-600 text-xl">$0</span>
+          </div>
+
+          <div class="space-y-2">
+            <input type="text" id="clientName" placeholder="Tu nombre y apellido" class="w-full px-3 py-2 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-bazar-300">
+            <select id="deliveryMethod" class="w-full px-3 py-2 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-bazar-300">
+              <option value="Retiro en local">Retiro en local</option>
+              <option value="Envío a domicilio">Envío a domicilio</option>
+            </select>
+          </div>
+
+          <button onclick="enviarWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#20ba59] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm transition">
+            Enviar Pedido a WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       3. LÓGICA DE PROGRAMACIÓN EN JAVASCRIPT
+       ========================================================================== -->
+  <script>
+    // Constantes de configuración del backend (Google Apps Script) y teléfono destino
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_kibEnyrDJtfXOe195P1njvrA4PVmZFxqSrOJ9NRQnFxhKsA0HRDOM0_PmOqMEYcN/exec";
+    const WHATSAPP_PHONE = "5491124529009";
+
+    // Bandera manual para pruebas: si está en true fuerza el modo Navidad cualquier día del año
+    const FORZAR_NAVIDAD = false;
+
+    // Variables de estado global de la aplicación (en memoria mientras la pestaña está abierta)
+    let allProducts = [];          // Guarda la lista completa de productos traídos del Sheet
+    let cart = [];                 // Guarda los productos que el cliente fue agregando al pedido
+    let currentPhotoIndices = {};  // Diccionario { idProducto: indiceFotoActual } para recordar qué foto mira cada tarjeta
+    let currentZoomProduct = null; // Guarda el objeto del producto abierto actualmente en el visor de zoom
+    let esEpocaNavidad = false;    // Booleano que indica si la temática navideña está activa
+
+    /**
+     * Evalúa la fecha actual del sistema del usuario para activar automáticamente
+     * la estética navideña entre el 1 de noviembre y el 1 de enero.
+     */
+    function verificarTematicaNavidad() {
+      const hoy = new Date();
+      const mes = hoy.getMonth(); // En JS los meses van de 0 a 11 (0 = Enero, 10 = Noviembre, 11 = Diciembre)
+      const dia = hoy.getDate();  // Día del mes (1 a 31)
+
+      // Condición compuesta: (Todo Nov) O (Todo Diciembre) O (1 de Enero)
+      const enRangoNavidad = (mes === 10) || (mes === 11) || (mes === 0 && dia === 1);
+      esEpocaNavidad = FORZAR_NAVIDAD || enRangoNavidad;
+
+      if (esEpocaNavidad) {
+        document.body.classList.add('tema-navidad'); // Activa las variables CSS y el patrón de fondo
+        document.getElementById('xmasBanner').classList.remove('hidden'); // Muestra el cartel superior
+        document.getElementById('brandTitle').innerHTML = 'Al2 Bazar <span class="text-xl">🎅</span>';
+        
+        generarLucesNavidad();
+        generarEstrellas();
+      }
+    }
+
+    /**
+     * Calcula el ancho de la pantalla e inyecta dinámicamente elementos <span>
+     * con la clase 'foco' para formar la guirnalda superior de luces.
+     */
+    function generarLucesNavidad() {
+      const lightsContainer = document.getElementById('xmasLights');
+      lightsContainer.classList.remove('hidden');
+      // Calculamos aproximadamente 1 foco cada 38 píxeles de ancho
+      const cantidadFocos = Math.floor(window.innerWidth / 38);
+      for (let i = 0; i < cantidadFocos; i++) {
+        const foco = document.createElement('span');
+        foco.className = 'foco';
+        lightsContainer.appendChild(foco);
+      }
+    }
+
+    /**
+     * Crea 22 partículas SVG (alternando estrellas de 5 puntas y destellos de 4 puntas)
+     * con posiciones horizontales, tamaños y tiempos de caída aleatorios.
+     */
+    function generarEstrellas() {
+      const container = document.getElementById('estrellasContainer');
+      const colores = ['#fef08a', '#fde047', '#ffffff'];
+      
+      for (let i = 0; i < 22; i++) {
+        const div = document.createElement('div');
+        div.className = 'estrella-cayendo';
+        
+        const esChispita = i % 3 === 0; // Cada 3 elementos, dibuja un destello romboidal
+        const size = esChispita ? (Math.random() * 7 + 7) : (Math.random() * 11 + 10);
+        const color = colores[i % colores.length];
+        
+        if (esChispita) {
+          div.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/></svg>`;
+        } else {
+          div.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><polygon points="12,2 15,9 22,9.5 16.5,14 18.2,21 12,17.2 5.8,21 7.5,14 2,9.5 9,9"/></svg>`;
+        }
+        
+        // Posición horizontal aleatoria en porcentaje del ancho de ventana (vw)
+        div.style.left = (Math.random() * 96) + 'vw';
+        // Duración de caída entre 9 y 18 segundos para que sea un movimiento suave
+        div.style.animationDuration = (Math.random() * 9 + 9) + 's';
+        // Retraso inicial aleatorio para que no caigan todas juntas al mismo tiempo
+        div.style.animationDelay = (Math.random() * 7) + 's';
+        container.appendChild(div);
+      }
+    }
+
+    /**
+     * Función auxiliar de limpieza de cadenas: quita tildes (diacríticos), espacios sobrantes
+     * y pasa todo a minúsculas para que las búsquedas y comparaciones no fallen por ortografía.
+     */
+    function normalizarTexto(txt) {
+      return String(txt || '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .trim()
+        .toLowerCase();
+    }
+
+    /**
+     * Función asíncrona principal: se ejecuta al abrir la página, consulta la API de Google Apps Script,
+     * transforma los datos crudos y dispara el primer renderizado en pantalla.
+     */
+    async function cargarCatalogo() {
+      verificarTematicaNavidad();
+
+      const status = document.getElementById('statusMessage');
+      const grid = document.getElementById('productsGrid');
+
+      try {
+        // Petición HTTP GET al endpoint de Apps Script
+        const res = await fetch(APPS_SCRIPT_URL);
+        const rawProducts = await res.json();
+
+        // Preprocesamos cada producto: si la categoría tiene barras (ej. "Bazar / Cocina"),
+        // la dividimos en un arreglo ["Bazar", "Cocina"] y guardamos también su versión normalizada.
+        allProducts = rawProducts.map(p => {
+          const cats = String(p.categoria || 'Varios')
+            .split('/')
+            .map(c => c.trim())
+            .filter(Boolean);
+          
+          return {
+            ...p,
+            categoriasLista: cats.length > 0 ? cats : ['Varios'],
+            categoriasNorm: (cats.length > 0 ? cats : ['Varios']).map(normalizarTexto)
+          };
+        });
+        
+        // Ocultamos el mensaje de carga y mostramos la grilla
+        status.classList.add('hidden');
+        grid.classList.remove('hidden');
+        document.getElementById('countDisplay').classList.remove('hidden');
+
+        construirCategorias();
+        filtrarProductos();
+      } catch (err) {
+        status.innerHTML = `<p class="text-rose-500 font-semibold mb-2">Error cargando el catálogo.</p>`;
+      }
+    }
+
+    /**
+     * Recorre todos los productos, extrae las categorías únicas (evitando duplicados
+     * por mayúsculas o tildes), cuenta cuántos ítems tiene cada una y llena el <select>.
+     */
+    function construirCategorias() {
+      const select = document.getElementById('categorySelect');
+      const mapaCats = new Map(); // Estructura clave-valor: clave normalizada -> { label, count }
+
+      allProducts.forEach(p => {
+        const vistasEnProd = new Set(); // Evita contar 2 veces el mismo producto si repitiera categoría
+        p.categoriasLista.forEach(cat => {
+          const norm = normalizarTexto(cat);
+          if (!vistasEnProd.has(norm)) {
+            vistasEnProd.add(norm);
+            if (!mapaCats.has(norm)) {
+              mapaCats.set(norm, { label: cat, count: 0 });
+            }
+            mapaCats.get(norm).count++;
+          }
+        });
+      });
+
+      // Convertimos el Map a Array y ordenamos alfabéticamente según reglas del español
+      const ordenadas = Array.from(mapaCats.entries())
+        .sort((a, b) => a[1].label.localeCompare(b[1].label, 'es'));
+
+      // Inyectamos las opciones HTML dentro del desplegable
+      select.innerHTML = `<option value="Todas">Todas las categorías (${allProducts.length})</option>` +
+        ordenadas.map(([norm, info]) => `
+          <option value="${norm}">${info.label} (${info.count})</option>
+        `).join('');
+    }
+
+    /**
+     * Aplica en simultáneo los 4 criterios de filtrado y ordenamiento elegidos por el usuario
+     * (texto buscado, categoría seleccionada, checkbox de stock y criterio de orden) y llama a renderGrid().
+     */
+    function filtrarProductos() {
+      const q = normalizarTexto(document.getElementById('searchInput').value);
+      const selectedCat = document.getElementById('categorySelect').value;
+      const onlyStock = document.getElementById('stockOnly').checked;
+      const sort = document.getElementById('sortSelect').value;
+
+      // .filter() devuelve un nuevo arreglo solo con los productos que cumplen las 3 condiciones
+      let filtered = allProducts.filter(p => {
+        const matchesQuery = !q || 
+          normalizarTexto(p.nombre).includes(q) || 
+          p.categoriasNorm.some(c => c.includes(q));
+        
+        const matchesCat = selectedCat === 'Todas' || p.categoriasNorm.includes(selectedCat);
+        const matchesStock = !onlyStock || p.stock;
+        
+        return matchesQuery && matchesCat && matchesStock;
+      });
+
+      // .sort() reordena el arreglo resultante según la opción seleccionada
+      if (sort === 'price-asc') filtered.sort((a,b) => a.precio - b.precio);
+      if (sort === 'price-desc') filtered.sort((a,b) => b.precio - a.precio);
+      if (sort === 'alpha') filtered.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es'));
+
+      renderGrid(filtered);
+    }
+
+    /**
+     * Genera el código HTML de cada tarjeta de producto y lo inserta en la grilla principal.
+     * @param {Array} products - Lista ya filtrada y ordenada de productos a dibujar.
+     */
+    function renderGrid(products) {
+      const grid = document.getElementById('productsGrid');
+      const count = document.getElementById('countDisplay');
+      count.textContent = `Mostrando ${products.length} productos`;
+
+      if (products.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-stone-500 bg-white/80 rounded-2xl">No se encontraron productos con esos filtros.</div>`;
+        return;
+      }
+
+      // Emoji de respaldo si un artículo todavía no tiene foto cargada
+      const iconoSinFoto = esEpocaNavidad ? '🎄' : '🌸';
+
+      // Transformamos cada objeto producto en un bloque HTML usando Template Literals (`...`)
+      grid.innerHTML = products.map(p => {
+        const fotos = p.fotos && p.fotos.length > 0 ? p.fotos : [];
+        if (!(p.id in currentPhotoIndices)) currentPhotoIndices[p.id] = 0;
+        const curIdx = currentPhotoIndices[p.id];
+        const currentImg = fotos.length > 0 ? fotos[curIdx] : null;
+
+        return `
+          <div class="bg-white rounded-2xl p-3 border border-bazar-200 flex flex-col justify-between shadow-sm hover:shadow-md transition">
+            <div>
+              <!-- Contenedor de imagen con carrusel y disparador de Zoom -->
+              <div class="relative w-full h-44 bg-bazar-100/60 rounded-xl overflow-hidden mb-3 flex items-center justify-center group">
+                ${currentImg ? `
+                  <img id="img-${p.id}" src="${currentImg}" alt="${p.nombre}" class="w-full h-full object-contain p-2 cursor-pointer transition-transform duration-200 group-hover:scale-105" loading="lazy" onclick="abrirZoom(${p.id})">
+                  
+                  <button onclick="abrirZoom(${p.id})" title="Ver en grande" class="absolute top-2 right-2 bg-white/85 hover:bg-white text-stone-700 w-7 h-7 rounded-full flex items-center justify-center shadow text-xs backdrop-blur opacity-80 sm:opacity-0 group-hover:opacity-100 transition">
+                    🔍
+                  </button>
+
+                  ${fotos.length > 1 ? `
+                    <button onclick="cambiarFoto(event, ${p.id}, -1)" class="absolute left-1 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-stone-700 w-6 h-6 rounded-full flex items-center justify-center shadow text-xs font-bold">‹</button>
+                    <button onclick="cambiarFoto(event, ${p.id}, 1)" class="absolute right-1 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-stone-700 w-6 h-6 rounded-full flex items-center justify-center shadow text-xs font-bold">›</button>
+                    <span id="dots-${p.id}" class="absolute bottom-1 bg-black/45 text-white text-[10px] px-2 py-0.5 rounded-full select-none">${curIdx + 1}/${fotos.length}</span>
+                  ` : ''}
+                ` : `
+                  <div class="flex flex-col items-center justify-center text-bazar-300">
+                    <span class="text-3xl">${iconoSinFoto}</span>
+                    <span class="text-[10px] text-stone-400 mt-1">Al2 Bazar</span>
+                  </div>
+                `}
+              </div>
+
+              <!-- Etiqueta de categoría e indicador visual de stock -->
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-bazar-700 bg-bazar-100 px-2 py-0.5 rounded-md line-clamp-1 max-w-[65%]" title="${p.categoriasLista.join(' / ')}">
+                  ${p.categoriasLista.join(' / ')}
+                </span>
+                <span class="text-[11px] font-semibold ${p.stock ? 'text-emerald-600' : 'text-stone-400'}">
+                  ${p.stock ? '● En Stock' : '○ Sin Stock'}
+                </span>
+              </div>
+              <h3 class="font-semibold text-stone-800 text-xs leading-snug line-clamp-2" title="${p.nombre}">${p.nombre}</h3>
+            </div>
+
+            <!-- Pie de tarjeta: Precio formateado en pesos argentinos y botón de compra -->
+            <div class="mt-3 pt-3 border-t border-stone-100 flex items-center justify-between">
+              <span class="text-sm font-bold text-stone-900">$${p.precio.toLocaleString('es-AR')}</span>
+              <button 
+                onclick="addToCart(${p.id})" 
+                ${!p.stock ? 'disabled' : ''}
+                class="text-xs font-semibold px-3 py-1.5 rounded-lg transition ${p.stock ? 'bg-bazar-500 text-white hover:bg-bazar-600' : 'bg-stone-100 text-stone-400 cursor-not-allowed'}"
+              >
+                ${p.stock ? '+ Agregar' : 'Agotado'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /**
+     * Avanza o retrocede la foto activa dentro de la tarjeta de un producto (carrusel cíclico).
+     * @param {Event} event - Evento del clic (para frenar su propagación y no abrir el zoom).
+     * @param {number} id - ID del producto.
+     * @param {number} delta - Dirección: -1 (anterior) o +1 (siguiente).
+     */
+    function cambiarFoto(event, id, delta) {
+      if (event) event.stopPropagation();
+      const prod = allProducts.find(p => p.id === id);
+      if (!prod || !prod.fotos || prod.fotos.length <= 1) return;
+
+      let idx = currentPhotoIndices[id] + delta;
+      // Si se pasa de los límites, da la vuelta al principio o al final
+      if (idx < 0) idx = prod.fotos.length - 1;
+      if (idx >= prod.fotos.length) idx = 0;
+      
+      currentPhotoIndices[id] = idx;
+      const imgEl = document.getElementById(`img-${id}`);
+      const dotsEl = document.getElementById(`dots-${id}`);
+      
+      if (imgEl) imgEl.src = prod.fotos[idx];
+      if (dotsEl) dotsEl.textContent = `${idx + 1}/${prod.fotos.length}`;
+    }
+
+    /**
+     * Abre el modal de pantalla completa (Lightbox) cargando la foto actual del producto seleccionado.
+     */
+    function abrirZoom(id) {
+      const prod = allProducts.find(p => p.id === id);
+      if (!prod || !prod.fotos || prod.fotos.length === 0) return;
+
+      currentZoomProduct = prod;
+      actualizarVistaZoom();
+      document.getElementById('zoomModal').classList.remove('hidden');
+    }
+
+    /**
+     * Cierra el modal de zoom y limpia la referencia al producto activo.
+     */
+    function cerrarZoom(event) {
+      if (event && event.target.id !== 'zoomModal' && event.target.tagName !== 'BUTTON') return;
+      document.getElementById('zoomModal').classList.add('hidden');
+      currentZoomProduct = null;
+    }
+
+    /**
+     * Sincroniza la imagen, el título y el contador (ej. "2 / 4") dentro del visor ampliado.
+     */
+    function actualizarVistaZoom() {
+      if (!currentZoomProduct) return;
+      const curIdx = currentPhotoIndices[currentZoomProduct.id] || 0;
+      const zoomImg = document.getElementById('zoomImg');
+      const zoomCounter = document.getElementById('zoomCounter');
+      const zoomControls = document.getElementById('zoomControls');
+      const zoomTitle = document.getElementById('zoomTitle');
+
+      zoomImg.src = currentZoomProduct.fotos[curIdx];
+      zoomTitle.textContent = currentZoomProduct.nombre;
+
+      if (currentZoomProduct.fotos.length > 1) {
+        zoomControls.classList.remove('hidden');
+        zoomCounter.textContent = `${curIdx + 1} / ${currentZoomProduct.fotos.length}`;
+      } else {
+        zoomControls.classList.add('hidden');
+      }
+    }
+
+    /**
+     * Permite pasar de foto estando dentro del modal de zoom y mantiene sincronizada la tarjeta de atrás.
+     */
+    function cambiarFotoZoom(delta) {
+      if (!currentZoomProduct) return;
+      cambiarFoto(null, currentZoomProduct.id, delta);
+      actualizarVistaZoom();
+    }
+
+    // Escucha eventos globales del teclado para mejorar la accesibilidad (Escape cierra modales, flechas pasan fotos)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('zoomModal').classList.add('hidden');
+        toggleCart(false);
+      }
+      if (!document.getElementById('zoomModal').classList.contains('hidden') && currentZoomProduct) {
+        if (e.key === 'ArrowLeft') cambiarFotoZoom(-1);
+        if (e.key === 'ArrowRight') cambiarFotoZoom(1);
+      }
+    });
+
+    /**
+     * Agrega una unidad del producto al arreglo 'cart'. Si ya existía, incrementa su cantidad (qty).
+     */
+    function addToCart(id) {
+      const product = allProducts.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      actualizarCarrito();
+    }
+
+    /**
+     * Suma o resta unidades de un ítem dentro del carrito. Si llega a 0, lo elimina del arreglo.
+     */
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      actualizarCarrito();
+    }
+
+    /**
+     * Recalcula la cantidad total de ítems, el monto total en pesos y redibuja la lista del carrito.
+     */
+    function actualizarCarrito() {
+      const badge = document.getElementById('cartBadge');
+      const list = document.getElementById('cartItems');
+      const totalEl = document.getElementById('cartTotal');
+
+      // .reduce() acumula valores recorriendo todo el arreglo del carrito
+      const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
+      const totalPrice = cart.reduce((acc, i) => acc + (i.precio * i.qty), 0);
+
+      badge.textContent = totalItems;
+      totalEl.textContent = `$${totalPrice.toLocaleString('es-AR')}`;
+
+      if (cart.length === 0) {
+        list.innerHTML = `<div class="text-center py-12 text-stone-400 text-sm">Tu pedido está vacío.</div>`;
+        return;
+      }
+
+      list.innerHTML = cart.map(item => `
+        <div class="flex items-center justify-between bg-stone-50 p-2.5 rounded-xl border border-stone-100">
+          <div class="flex-1 pr-2">
+            <p class="text-xs font-semibold text-stone-800 line-clamp-1">${item.nombre}</p>
+            <p class="text-xs text-bazar-600 font-bold">$${(item.precio * item.qty).toLocaleString('es-AR')}</p>
+          </div>
+          <div class="flex items-center gap-1.5 bg-white border border-stone-200 rounded-lg px-2 py-0.5">
+            <button onclick="changeQty(${item.id}, -1)" class="text-stone-500 font-bold text-sm px-1">-</button>
+            <span class="text-xs font-semibold w-4 text-center">${item.qty}</span>
+            <button onclick="changeQty(${item.id}, 1)" class="text-stone-500 font-bold text-sm px-1">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /**
+     * Muestra u oculta el panel lateral del carrito alternando la clase 'hidden' de Tailwind.
+     */
+    function toggleCart(show) {
+      document.getElementById('cartModal').classList.toggle('hidden', !show);
+    }
+
+    /**
+     * Arma el mensaje de texto estructurado con el detalle del pedido, lo codifica para URL
+     * (encodeURIComponent) y abre la API oficial de WhatsApp en una pestaña nueva.
+     */
+    function enviarWhatsApp() {
+      if (cart.length === 0) {
+        alert('Agregá al menos un producto al pedido.');
+        return;
+      }
+      const nombre = document.getElementById('clientName').value.trim() || 'No especificado';
+      const entrega = document.getElementById('deliveryMethod').value;
+      const total = cart.reduce((acc, i) => acc + (i.precio * i.qty), 0);
+
+      let msg = `¡Hola *Al2 Bazar*! Quiero hacer el siguiente pedido:\n\n`;
+      cart.forEach(item => {
+        msg += `▪ ${item.qty}x ${item.nombre} ($${(item.precio * item.qty).toLocaleString('es-AR')})\n`;
+      });
+      msg += `\n*Total:* $${total.toLocaleString('es-AR')}`;
+      msg += `\n*Cliente:* ${nombre}`;
+      msg += `\n*Entrega:* ${entrega}`;
+
+      window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // Punto de entrada: inicia la ejecución apenas termina de leerse el documento
+    cargarCatalogo();
+  </script>
+</body>
+</html>
