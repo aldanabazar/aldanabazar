@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Configuración básica del documento: codificación de caracteres (tildes, ñ) y vista adaptable a celulares -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Al2 Bazar - Catálogo Online</title>
 
-  <!-- Importación de Tailwind CSS desde CDN (permite estilizar usando clases directamente en el HTML) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Importación de tipografías desde Google Fonts: 'Plus Jakarta Sans' (general) y 'Great Vibes' (cursiva navideña) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Configuración personalizada de Tailwind: vinculamos nuestras fuentes y creamos una paleta dinámica llamada 'bazar' -->
   <script>
     tailwind.config = {
       theme: {
@@ -128,12 +124,24 @@
       0% { opacity: 0.45; transform: scale(0.92); }
       100% { opacity: 1; transform: scale(1.06); }
     }
+
+    html { scroll-behavior: smooth; }
   </style>
 </head>
 <body class="bg-bazar-50 text-stone-800 min-h-screen flex flex-col font-sans transition-colors duration-500">
 
-  <!-- Contenedor vacío donde JS inyectará las estrellitas si es época navideña -->
+  <!-- Contenedor de estrellitas -->
   <div id="estrellasContainer"></div>
+
+  <!-- Notificación Toast flotante -->
+  <div id="toastMsg" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-stone-900/90 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg backdrop-blur transition-all duration-300 opacity-0 pointer-events-none">
+    Enlace copiado
+  </div>
+
+  <!-- Botón flotante para volver rápido arriba al buscador -->
+  <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Volver arriba" class="fixed bottom-5 right-5 z-30 bg-white/95 hover:bg-bazar-500 text-bazar-600 hover:text-white border border-bazar-200 w-10 h-10 rounded-full shadow-lg flex items-center justify-center font-bold text-lg transition-all duration-300 opacity-0 pointer-events-none">
+    ↑
+  </button>
 
   <!-- Banner superior navideño -->
   <div id="xmasBanner" class="hidden relative z-20 bg-gradient-to-r from-[#be123c] via-[#15803d] to-[#be123c] text-white text-center py-2 px-4 shadow-sm flex flex-wrap items-center justify-center gap-2">
@@ -144,7 +152,7 @@
   <!-- Encabezado fijo -->
   <header class="bg-white/95 backdrop-blur sticky top-0 z-40 border-b border-bazar-200 shadow-sm">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="resetearFiltros()">
         <div>
           <h1 id="brandTitle" class="text-2xl font-bold tracking-tight text-bazar-600">Al2 Bazar</h1>
           <p class="text-xs text-stone-500 font-medium">Catálogo & Pedidos por WhatsApp</p>
@@ -162,14 +170,15 @@
 
   <!-- Sección de Controles -->
   <section class="max-w-6xl mx-auto px-4 pt-5 pb-4 w-full relative z-10">
-    <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+    <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
       
+      <!-- Buscador + Categorías -->
       <div class="flex flex-col sm:flex-row gap-2.5 flex-1">
         <div class="relative flex-1">
           <input 
             type="text" 
             id="searchInput" 
-            placeholder="Buscar producto..." 
+            placeholder="Buscar producto o detalle..." 
             class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-bazar-200 bg-white/95 backdrop-blur focus:outline-none focus:ring-2 focus:ring-bazar-400 text-sm shadow-sm"
             oninput="filtrarProductos()"
           >
@@ -188,14 +197,27 @@
         </div>
       </div>
 
-      <div class="flex gap-2 items-center justify-between sm:justify-end">
-        <label class="inline-flex items-center cursor-pointer bg-white/95 backdrop-blur px-3.5 py-2.5 rounded-xl border border-bazar-200 text-xs font-semibold text-stone-600 select-none shadow-sm">
+      <!-- Interruptores (En Stock / Ofertas / Nuevos) + Orden -->
+      <div class="flex flex-wrap gap-2 items-center justify-between sm:justify-end">
+        <label class="inline-flex items-center cursor-pointer bg-white/95 backdrop-blur px-3 py-2.5 rounded-xl border border-bazar-200 text-xs font-semibold text-stone-600 select-none shadow-sm">
           <input type="checkbox" id="stockOnly" class="sr-only peer" onchange="filtrarProductos()">
-          <div class="w-8 h-4 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-bazar-500 relative mr-2"></div>
-          Solo con Stock
+          <div class="w-7 h-4 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-bazar-500 relative mr-1.5"></div>
+          En Stock
         </label>
 
-        <select id="sortSelect" onchange="filtrarProductos()" class="bg-white/95 backdrop-blur border border-bazar-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-stone-600 focus:outline-none focus:ring-2 focus:ring-bazar-300 shadow-sm cursor-pointer">
+        <label class="inline-flex items-center cursor-pointer bg-white/95 backdrop-blur px-3 py-2.5 rounded-xl border border-bazar-200 text-xs font-semibold text-stone-600 select-none shadow-sm">
+          <input type="checkbox" id="offersOnly" class="sr-only peer" onchange="filtrarProductos()">
+          <div class="w-7 h-4 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-500 relative mr-1.5"></div>
+          🔥 Ofertas
+        </label>
+
+        <label class="inline-flex items-center cursor-pointer bg-white/95 backdrop-blur px-3 py-2.5 rounded-xl border border-bazar-200 text-xs font-semibold text-stone-600 select-none shadow-sm">
+          <input type="checkbox" id="newOnly" class="sr-only peer" onchange="filtrarProductos()">
+          <div class="w-7 h-4 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-500 relative mr-1.5"></div>
+          ✨ Nuevos
+        </label>
+
+        <select id="sortSelect" onchange="filtrarProductos()" class="bg-white/95 backdrop-blur border border-bazar-200 rounded-xl px-3 py-2.5 text-xs font-semibold text-stone-600 focus:outline-none focus:ring-2 focus:ring-bazar-300 shadow-sm cursor-pointer">
           <option value="default">Orden original</option>
           <option value="price-asc">Menor precio</option>
           <option value="price-desc">Mayor precio</option>
@@ -206,26 +228,31 @@
   </section>
 
   <!-- Contenedor Principal -->
-  <main class="max-w-6xl mx-auto px-4 pb-12 flex-1 w-full relative z-10">
+  <main class="max-w-6xl mx-auto px-4 pb-16 flex-1 w-full relative z-10">
     <div id="statusMessage" class="text-center py-16 text-stone-600 font-medium text-sm bg-white/80 rounded-2xl backdrop-blur-sm">
       Cargando catálogo e imágenes...
     </div>
     
     <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 hidden"></div>
 
-    <div id="countDisplay" class="text-center text-xs font-semibold text-stone-600 bg-white/85 backdrop-blur-sm py-1.5 px-4 rounded-full w-fit mx-auto mt-6 hidden shadow-sm"></div>
+    <div id="loadMoreContainer" class="text-center mt-8 hidden space-y-2">
+      <p id="countDisplay" class="text-xs font-semibold text-stone-600 bg-white/85 backdrop-blur-sm py-1.5 px-4 rounded-full w-fit mx-auto shadow-sm"></p>
+      <button id="loadMoreBtn" onclick="cargarMasProductos()" class="bg-white hover:bg-bazar-500 text-bazar-600 hover:text-white border border-bazar-300 font-semibold text-xs px-5 py-2.5 rounded-full shadow-sm transition hidden">
+        Mostrar más productos ↓
+      </button>
+    </div>
   </main>
 
-  <!-- Modal Lightbox para ver la foto del producto ampliada y su descripción -->
+  <!-- Modal Lightbox para ver foto ampliada, descripción, compartir y consultar -->
   <div id="zoomModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4" onclick="cerrarZoom(event)">
-    <div class="relative max-w-2xl w-full max-h-[90vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
-      <button onclick="cerrarZoom()" class="self-end mb-2 text-white hover:text-bazar-300 text-3xl font-bold leading-none px-2">&times;</button>
+    <div class="relative max-w-2xl w-full max-h-[92vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+      <button onclick="cerrarZoom()" class="self-end mb-1.5 text-white hover:text-bazar-300 text-3xl font-bold leading-none px-2">&times;</button>
       
-      <!-- Imagen ampliada (se ajusta automáticamente si hay descripción abajo) -->
-      <img id="zoomImg" src="" alt="Zoom Producto" class="max-w-full max-h-[55vh] sm:max-h-[62vh] object-contain rounded-2xl shadow-2xl bg-white/5 select-none">
+      <div id="zoomImgWrapper" class="relative w-full flex items-center justify-center touch-pan-y">
+        <img id="zoomImg" src="" alt="Zoom Producto" class="max-w-full max-h-[50vh] sm:max-h-[58vh] object-contain rounded-2xl shadow-2xl bg-white/5 select-none">
+      </div>
       
-      <!-- Controles de carrusel en el zoom -->
-      <div id="zoomControls" class="flex items-center justify-between w-full max-w-md mt-3 px-2">
+      <div id="zoomControls" class="flex items-center justify-between w-full max-w-md mt-2.5 px-2">
         <button onclick="cambiarFotoZoom(-1)" class="bg-white/20 hover:bg-white/40 text-white px-3 py-1.5 rounded-full font-bold text-xs sm:text-sm backdrop-blur transition flex items-center gap-1">
           ‹ Anterior
         </button>
@@ -235,11 +262,28 @@
         </button>
       </div>
 
-      <!-- Tarjeta inferior con el título y la descripción del producto -->
-      <div class="w-full max-w-lg mt-3 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 shadow-xl text-center">
-        <p id="zoomTitle" class="text-stone-900 text-sm sm:text-base font-bold leading-snug"></p>
-        <!-- whitespace-pre-line respeta los saltos de línea (Alt + Enter) que carguen en la celda del Sheet -->
-        <p id="zoomDesc" class="hidden text-stone-600 text-xs sm:text-sm mt-2 pt-2 border-t border-stone-200 leading-relaxed max-h-28 overflow-y-auto whitespace-pre-line text-left"></p>
+      <div class="w-full max-w-lg mt-3 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 shadow-xl">
+        <div class="flex items-start justify-between gap-2">
+          <p id="zoomTitle" class="text-stone-900 text-sm sm:text-base font-bold leading-snug text-left"></p>
+          <span id="zoomPrice" class="text-bazar-600 font-bold text-base whitespace-nowrap"></span>
+        </div>
+
+        <p id="zoomDesc" class="hidden text-stone-600 text-xs sm:text-sm mt-2 pt-2 border-t border-stone-200 leading-relaxed max-h-24 overflow-y-auto whitespace-pre-line text-left"></p>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 mt-3 pt-2.5 border-t border-stone-100">
+          <div class="flex gap-1.5">
+            <button onclick="compartirProductoActual()" class="bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center gap-1" title="Copiar link directo de este producto">
+              🔗 Compartir
+            </button>
+            <button onclick="consultarProductoWhatsApp()" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center gap-1">
+              💬 Consultar
+            </button>
+          </div>
+
+          <button id="zoomAddBtn" onclick="agregarDesdeZoom()" class="bg-bazar-500 hover:bg-bazar-600 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition">
+            + Agregar al pedido
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -285,12 +329,27 @@
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_kibEnyrDJtfXOe195P1njvrA4PVmZFxqSrOJ9NRQnFxhKsA0HRDOM0_PmOqMEYcN/exec";
     const WHATSAPP_PHONE = "5491124529009";
     const FORZAR_NAVIDAD = false;
+    const STORAGE_KEY_CART = "al2_bazar_carrito_v1";
+    const PRODUCTOS_POR_TANDA = 40;
 
     let allProducts = [];
+    let currentFiltered = [];
+    let visibleCount = PRODUCTOS_POR_TANDA;
     let cart = [];
     let currentPhotoIndices = {};
     let currentZoomProduct = null;
     let esEpocaNavidad = false;
+    let touchStartX = 0;
+
+    function mostrarToast(texto) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = texto;
+      toast.classList.remove('opacity-0');
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => {
+        toast.classList.add('opacity-0');
+      }, 2200);
+    }
 
     function verificarTematicaNavidad() {
       const hoy = new Date();
@@ -304,7 +363,6 @@
         document.body.classList.add('tema-navidad');
         document.getElementById('xmasBanner').classList.remove('hidden');
         document.getElementById('brandTitle').innerHTML = 'Al2 Bazar <span class="text-xl">🎅</span>';
-        
         generarLucesNavidad();
         generarEstrellas();
       }
@@ -328,7 +386,6 @@
       for (let i = 0; i < 22; i++) {
         const div = document.createElement('div');
         div.className = 'estrella-cayendo';
-        
         const esChispita = i % 3 === 0;
         const size = esChispita ? (Math.random() * 7 + 7) : (Math.random() * 11 + 10);
         const color = colores[i % colores.length];
@@ -353,8 +410,27 @@
         .toLowerCase();
     }
 
+    function restaurarCarritoGuardado() {
+      try {
+        const guardado = localStorage.getItem(STORAGE_KEY_CART);
+        if (guardado) {
+          cart = JSON.parse(guardado);
+          actualizarCarrito(false);
+        }
+      } catch (e) {
+        cart = [];
+      }
+    }
+
+    function persistirCarrito() {
+      try {
+        localStorage.setItem(STORAGE_KEY_CART, JSON.stringify(cart));
+      } catch (e) {}
+    }
+
     async function cargarCatalogo() {
       verificarTematicaNavidad();
+      restaurarCarritoGuardado();
 
       const status = document.getElementById('statusMessage');
       const grid = document.getElementById('productsGrid');
@@ -369,19 +445,53 @@
             .map(c => c.trim())
             .filter(Boolean);
           
+          const nombreNorm = normalizarTexto(p.nombre);
+          const etiquetaNorm = normalizarTexto(p.etiqueta);
+
+          // Detecta por separado si el artículo es Oferta o si es Nuevo
+          const esOferta = /\b(ganga|oferta|promo|liquidacion|descuento)\b/.test(nombreNorm) || 
+                           /\b(ganga|oferta|promo|liquidacion|descuento)\b/.test(etiquetaNorm);
+
+          const esNuevo = /\b(nuevo|nueva|nuevos|nuevas|ingreso|novedad)\b/.test(nombreNorm) || 
+                          /\b(nuevo|nueva|nuevos|nuevas|ingreso|novedad)\b/.test(etiquetaNorm);
+
+          // Determina la cintita visual sobre la foto (prioriza lo escrito en la columna Etiqueta)
+          let etiquetaFinal = p.etiqueta ? p.etiqueta.trim().toUpperCase() : '';
+          if (!etiquetaFinal) {
+            if (esOferta) etiquetaFinal = 'OFERTA';
+            else if (esNuevo) etiquetaFinal = 'NUEVO';
+          }
+
           return {
             ...p,
             categoriasLista: cats.length > 0 ? cats : ['Varios'],
-            categoriasNorm: (cats.length > 0 ? cats : ['Varios']).map(normalizarTexto)
+            categoriasNorm: (cats.length > 0 ? cats : ['Varios']).map(normalizarTexto),
+            etiquetaBadge: etiquetaFinal,
+            esOferta: esOferta,
+            esNuevo: esNuevo
           };
         });
         
         status.classList.add('hidden');
         grid.classList.remove('hidden');
-        document.getElementById('countDisplay').classList.remove('hidden');
+        document.getElementById('loadMoreContainer').classList.remove('hidden');
 
         construirCategorias();
         filtrarProductos();
+
+        const params = new URLSearchParams(window.location.search);
+        const prodIdCompartido = Number(params.get('prod'));
+        if (prodIdCompartido) {
+          const encontrado = allProducts.find(p => p.id === prodIdCompartido);
+          if (encontrado) {
+            if (encontrado.fotos && encontrado.fotos.length > 0) {
+              abrirZoom(encontrado.id);
+            } else {
+              document.getElementById('searchInput').value = encontrado.nombre;
+              filtrarProductos();
+            }
+          }
+        }
       } catch (err) {
         status.innerHTML = `<p class="text-rose-500 font-semibold mb-2">Error cargando el catálogo.</p>`;
       }
@@ -414,14 +524,25 @@
         `).join('');
     }
 
+    function resetearFiltros() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('categorySelect').value = 'Todas';
+      document.getElementById('stockOnly').checked = false;
+      document.getElementById('offersOnly').checked = false;
+      document.getElementById('newOnly').checked = false;
+      document.getElementById('sortSelect').value = 'default';
+      filtrarProductos();
+    }
+
     function filtrarProductos() {
       const q = normalizarTexto(document.getElementById('searchInput').value);
       const selectedCat = document.getElementById('categorySelect').value;
       const onlyStock = document.getElementById('stockOnly').checked;
+      const onlyOffers = document.getElementById('offersOnly').checked;
+      const onlyNew = document.getElementById('newOnly').checked;
       const sort = document.getElementById('sortSelect').value;
 
-      let filtered = allProducts.filter(p => {
-        // También busca dentro de la descripción si el usuario escribe una palabra clave
+      currentFiltered = allProducts.filter(p => {
         const matchesQuery = !q || 
           normalizarTexto(p.nombre).includes(q) || 
           normalizarTexto(p.descripcion).includes(q) ||
@@ -429,43 +550,76 @@
         
         const matchesCat = selectedCat === 'Todas' || p.categoriasNorm.includes(selectedCat);
         const matchesStock = !onlyStock || p.stock;
+        const matchesOffer = !onlyOffers || p.esOferta;
+        const matchesNew = !onlyNew || p.esNuevo;
         
-        return matchesQuery && matchesCat && matchesStock;
+        return matchesQuery && matchesCat && matchesStock && matchesOffer && matchesNew;
       });
 
-      if (sort === 'price-asc') filtered.sort((a,b) => a.precio - b.precio);
-      if (sort === 'price-desc') filtered.sort((a,b) => b.precio - a.precio);
-      if (sort === 'alpha') filtered.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es'));
+      if (sort === 'price-asc') currentFiltered.sort((a,b) => a.precio - b.precio);
+      if (sort === 'price-desc') currentFiltered.sort((a,b) => b.precio - a.precio);
+      if (sort === 'alpha') currentFiltered.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es'));
 
-      renderGrid(filtered);
+      visibleCount = PRODUCTOS_POR_TANDA;
+      renderGrid();
     }
 
-    function renderGrid(products) {
+    function cargarMasProductos() {
+      if (visibleCount >= currentFiltered.length) return;
+      visibleCount += PRODUCTOS_POR_TANDA;
+      renderGrid();
+    }
+
+    function renderGrid() {
       const grid = document.getElementById('productsGrid');
       const count = document.getElementById('countDisplay');
-      count.textContent = `Mostrando ${products.length} productos`;
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
 
-      if (products.length === 0) {
+      const aMostrar = currentFiltered.slice(0, visibleCount);
+      count.textContent = `Mostrando ${aMostrar.length} de ${currentFiltered.length} productos`;
+
+      if (visibleCount < currentFiltered.length) {
+        loadMoreBtn.classList.remove('hidden');
+      } else {
+        loadMoreBtn.classList.add('hidden');
+      }
+
+      if (currentFiltered.length === 0) {
         grid.innerHTML = `<div class="col-span-full text-center py-12 text-stone-500 bg-white/80 rounded-2xl">No se encontraron productos con esos filtros.</div>`;
         return;
       }
 
       const iconoSinFoto = esEpocaNavidad ? '🎄' : '🌸';
 
-      grid.innerHTML = products.map(p => {
+      grid.innerHTML = aMostrar.map(p => {
         const fotos = p.fotos && p.fotos.length > 0 ? p.fotos : [];
         if (!(p.id in currentPhotoIndices)) currentPhotoIndices[p.id] = 0;
         const curIdx = currentPhotoIndices[p.id];
         const currentImg = fotos.length > 0 ? fotos[curIdx] : null;
 
+        // Color de la cintita: verde esmeralda si es Nuevo, naranja cálido si es Oferta/Otro
+        const badgeColor = p.esNuevo && !p.esOferta ? 'bg-emerald-500' : 'bg-amber-500';
+        const badgeIcon = p.esNuevo && !p.esOferta ? '✨' : '🔥';
+
         return `
           <div class="bg-white rounded-2xl p-3 border border-bazar-200 flex flex-col justify-between shadow-sm hover:shadow-md transition">
             <div>
               <div class="relative w-full h-44 bg-bazar-100/60 rounded-xl overflow-hidden mb-3 flex items-center justify-center group">
+                
+                ${p.etiquetaBadge ? `
+                  <span class="absolute top-2 left-2 z-10 ${badgeColor} text-white text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md shadow-sm">
+                    ${badgeIcon} ${p.etiquetaBadge}
+                  </span>
+                ` : ''}
+
+                <button onclick="copiarLinkProducto(event, ${p.id})" title="Copiar enlace del producto" class="absolute top-2 ${currentImg ? 'right-10' : 'right-2'} z-10 bg-white/85 hover:bg-white text-stone-700 w-7 h-7 rounded-full flex items-center justify-center shadow text-xs backdrop-blur opacity-85 sm:opacity-0 group-hover:opacity-100 transition">
+                  🔗
+                </button>
+
                 ${currentImg ? `
                   <img id="img-${p.id}" src="${currentImg}" alt="${p.nombre}" class="w-full h-full object-contain p-2 cursor-pointer transition-transform duration-200 group-hover:scale-105" loading="lazy" onclick="abrirZoom(${p.id})">
                   
-                  <button onclick="abrirZoom(${p.id})" title="Ver en grande" class="absolute top-2 right-2 bg-white/85 hover:bg-white text-stone-700 w-7 h-7 rounded-full flex items-center justify-center shadow text-xs backdrop-blur opacity-80 sm:opacity-0 group-hover:opacity-100 transition">
+                  <button onclick="abrirZoom(${p.id})" title="Ver en grande" class="absolute top-2 right-2 bg-white/85 hover:bg-white text-stone-700 w-7 h-7 rounded-full flex items-center justify-center shadow text-xs backdrop-blur opacity-85 sm:opacity-0 group-hover:opacity-100 transition">
                     🔍
                   </button>
 
@@ -508,6 +662,52 @@
       }).join('');
     }
 
+    /**
+     * Copia el enlace directo (?prod=ID) al portapapeles de forma segura sin crashear Opera en PC,
+     * y usa el menú compartir nativo únicamente en celulares bajo HTTPS.
+     */
+    function copiarLinkProducto(event, id) {
+      if (event) event.stopPropagation();
+      const prod = allProducts.find(p => p.id === id);
+      const urlBase = window.location.href.split('?')[0];
+      const linkDirecto = `${urlBase}?prod=${id}`;
+
+      const esCelular = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const esHttps = window.location.protocol === 'https:';
+
+      if (esCelular && esHttps && navigator.share && prod) {
+        navigator.share({
+          title: `${prod.nombre} - Al2 Bazar`,
+          text: `Mirá este producto de Al2 Bazar: ${prod.nombre} ($${prod.precio.toLocaleString('es-AR')})`,
+          url: linkDirecto
+        }).catch(() => {});
+        return;
+      }
+
+      // Copiado seguro al portapapeles (funciona tanto en local file:/// como en GitHub Pages)
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(linkDirecto)
+          .then(() => mostrarToast('🔗 Enlace del producto copiado'))
+          .catch(() => copiarTextoFallback(linkDirecto));
+      } else {
+        copiarTextoFallback(linkDirecto);
+      }
+    }
+
+    function copiarTextoFallback(texto) {
+      const inputTemp = document.createElement('input');
+      inputTemp.value = texto;
+      document.body.appendChild(inputTemp);
+      inputTemp.select();
+      try {
+        document.execCommand('copy');
+        mostrarToast('🔗 Enlace del producto copiado');
+      } catch (e) {
+        mostrarToast('No se pudo copiar el enlace');
+      }
+      document.body.removeChild(inputTemp);
+    }
+
     function cambiarFoto(event, id, delta) {
       if (event) event.stopPropagation();
       const prod = allProducts.find(p => p.id === id);
@@ -540,10 +740,6 @@
       currentZoomProduct = null;
     }
 
-    /**
-     * Sincroniza la imagen, el contador, el título y muestra la descripción
-     * solo si esa fila tiene texto cargado en la columna 'Descripción'.
-     */
     function actualizarVistaZoom() {
       if (!currentZoomProduct) return;
       const curIdx = currentPhotoIndices[currentZoomProduct.id] || 0;
@@ -551,18 +747,30 @@
       const zoomCounter = document.getElementById('zoomCounter');
       const zoomControls = document.getElementById('zoomControls');
       const zoomTitle = document.getElementById('zoomTitle');
+      const zoomPrice = document.getElementById('zoomPrice');
       const zoomDesc = document.getElementById('zoomDesc');
+      const zoomAddBtn = document.getElementById('zoomAddBtn');
 
       zoomImg.src = currentZoomProduct.fotos[curIdx];
       zoomTitle.textContent = currentZoomProduct.nombre;
+      zoomPrice.textContent = `$${currentZoomProduct.precio.toLocaleString('es-AR')}`;
 
-      // Si el producto tiene descripción cargada en el Sheet, la mostramos; si no, ocultamos el párrafo
       if (currentZoomProduct.descripcion && currentZoomProduct.descripcion.trim() !== '') {
         zoomDesc.textContent = currentZoomProduct.descripcion;
         zoomDesc.classList.remove('hidden');
       } else {
         zoomDesc.textContent = '';
         zoomDesc.classList.add('hidden');
+      }
+
+      if (currentZoomProduct.stock) {
+        zoomAddBtn.disabled = false;
+        zoomAddBtn.textContent = '+ Agregar al pedido';
+        zoomAddBtn.className = 'bg-bazar-500 hover:bg-bazar-600 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition';
+      } else {
+        zoomAddBtn.disabled = true;
+        zoomAddBtn.textContent = 'Sin Stock';
+        zoomAddBtn.className = 'bg-stone-200 text-stone-400 text-xs font-bold px-4 py-2 rounded-xl cursor-not-allowed';
       }
 
       if (currentZoomProduct.fotos.length > 1) {
@@ -579,6 +787,48 @@
       actualizarVistaZoom();
     }
 
+    function compartirProductoActual() {
+      if (!currentZoomProduct) return;
+      copiarLinkProducto(null, currentZoomProduct.id);
+    }
+
+    function consultarProductoWhatsApp() {
+      if (!currentZoomProduct) return;
+      const msg = `¡Hola *Al2 Bazar*! Quería hacer una consulta por este producto:\n▪ *${currentZoomProduct.nombre}* ($${currentZoomProduct.precio.toLocaleString('es-AR')})`;
+      window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function agregarDesdeZoom() {
+      if (!currentZoomProduct || !currentZoomProduct.stock) return;
+      addToCart(currentZoomProduct.id);
+    }
+
+    const zoomWrapper = document.getElementById('zoomImgWrapper');
+    zoomWrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    zoomWrapper.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 40) {
+        cambiarFotoZoom(diff > 0 ? 1 : -1);
+      }
+    }, { passive: true });
+
+    window.addEventListener('scroll', () => {
+      const scrollBtn = document.getElementById('scrollTopBtn');
+      if (window.scrollY > 400) {
+        scrollBtn.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        scrollBtn.classList.add('opacity-0', 'pointer-events-none');
+      }
+
+      if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 600)) {
+        cargarMasProductos();
+      }
+    }, { passive: true });
+
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         document.getElementById('zoomModal').classList.add('hidden');
@@ -592,13 +842,14 @@
 
     function addToCart(id) {
       const product = allProducts.find(p => p.id === id);
+      if (!product) return;
       const existing = cart.find(item => item.id === id);
       if (existing) {
         existing.qty++;
       } else {
         cart.push({ ...product, qty: 1 });
       }
-      actualizarCarrito();
+      actualizarCarrito(true);
     }
 
     function changeQty(id, delta) {
@@ -606,10 +857,12 @@
       if (!item) return;
       item.qty += delta;
       if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
-      actualizarCarrito();
+      actualizarCarrito(false);
     }
 
-    function actualizarCarrito() {
+    function actualizarCarrito(notificar = false) {
+      persistirCarrito();
+
       const badge = document.getElementById('cartBadge');
       const list = document.getElementById('cartItems');
       const totalEl = document.getElementById('cartTotal');
@@ -619,6 +872,10 @@
 
       badge.textContent = totalItems;
       totalEl.textContent = `$${totalPrice.toLocaleString('es-AR')}`;
+
+      if (notificar) {
+        mostrarToast('🛒 Agregado a tu pedido');
+      }
 
       if (cart.length === 0) {
         list.innerHTML = `<div class="text-center py-12 text-stone-400 text-sm">Tu pedido está vacío.</div>`;
