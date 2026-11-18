@@ -37,6 +37,10 @@
   </script>
 
   <style>
+    /* ==========================================================================
+       1. PALETAS DE COLORES Y FONDOS POR TEMÁTICA
+       ========================================================================== */
+    /* Tema base todo el año */
     :root {
       --bazar-50: #fff5f7;
       --bazar-100: #ffe4e9;
@@ -48,6 +52,133 @@
       --bazar-700: #be123c;
     }
 
+    /* ENERO: Vacaciones / Playa */
+    body.tema-playa {
+      --bazar-50: #ecfeff;
+      --bazar-100: #cffafe;
+      --bazar-200: #a5f3fc;
+      --bazar-300: #67e8f9;
+      --bazar-400: #22d3ee;
+      --bazar-500: #0891b2;
+      --bazar-600: #0e7490;
+      --bazar-700: #b45309;
+      background-color: #ecfeff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' opacity='0.55'%3E%3Ccircle cx='45' cy='45' r='12' fill='%23fde047'/%3E%3Cpath d='M45 24v6M45 60v6M24 45h6M60 45h6M30 30l4 4M56 56l4 4M60 30l-4 4M34 56l-4 4' stroke='%23f59e0b' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M110 140q15-10 30 0t30 0' stroke='%2338bdf8' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M110 152q15-10 30 0t30 0' stroke='%2322d3ee' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='145' cy='50' r='9' stroke='%23fb7185' stroke-width='2.5'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* FEBRERO: San Valentín */
+    body.tema-valentin {
+      --bazar-50: #fff1f2;
+      --bazar-100: #ffe4e6;
+      --bazar-200: #fecdd3;
+      --bazar-300: #fda4af;
+      --bazar-400: #fb7185;
+      --bazar-500: #e11d48;
+      --bazar-600: #be123c;
+      --bazar-700: #9f1239;
+      background-color: #fff1f2;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='%23fda4af' opacity='0.45'%3E%3Cpath d='M45 35c-4-6-12-4-12 2 0 6 12 14 12 14s12-8 12-14c0-6-8-8-12-2z'/%3E%3Cpath d='M135 115c-3-5-10-3-10 2 0 5 10 11 10 11s10-6 10-11c0-5-7-7-10-2z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* PASCUAS */
+    body.tema-pascuas {
+      --bazar-50: #faf5ff;
+      --bazar-100: #f3e8ff;
+      --bazar-200: #e9d5ff;
+      --bazar-300: #d8b4fe;
+      --bazar-400: #c084fc;
+      --bazar-500: #9333ea;
+      --bazar-600: #7e22ce;
+      --bazar-700: #a16207;
+      background-color: #faf5ff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' opacity='0.5'%3E%3Cellipse cx='45' cy='48' rx='11' ry='15' stroke='%23c084fc' stroke-width='2.5'/%3E%3Cpath d='M35 48h20' stroke='%23fde047' stroke-width='2.5'/%3E%3Cellipse cx='135' cy='135' rx='10' ry='14' stroke='%23f472b6' stroke-width='2.5'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* FECHAS PATRIAS: 25 de Mayo, 20 de Junio (Bandera), 9 de Julio */
+    body.tema-patria {
+      --bazar-50: #f0f9ff;
+      --bazar-100: #e0f2fe;
+      --bazar-200: #bae6fd;
+      --bazar-300: #7dd3fc;
+      --bazar-400: #38bdf8;
+      --bazar-500: #0284c7;
+      --bazar-600: #0369a1;
+      --bazar-700: #ca8a04;
+      background-color: #f0f9ff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' opacity='0.55'%3E%3Ccircle cx='50' cy='50' r='14' stroke='%2338bdf8' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='7' stroke='%23ffffff' stroke-width='3'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%23eab308'/%3E%3Ccircle cx='150' cy='145' r='10' fill='%23fde047'/%3E%3Cpath d='M150 128v5M150 157v5M133 145h5M162 145h5M138 133l4 4M158 153l4 4M162 133l-4 4M142 153l-4 4' stroke='%23eab308' stroke-width='2' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* JUNIO: Día del Padre */
+    body.tema-padre {
+      --bazar-50: #f1f5f9;
+      --bazar-100: #e2e8f0;
+      --bazar-200: #cbd5e1;
+      --bazar-300: #94a3b8;
+      --bazar-400: #475569;
+      --bazar-500: #1e3a8a;
+      --bazar-600: #172554;
+      --bazar-700: #b45309;
+      background-color: #f1f5f9;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='%2394a3b8' opacity='0.35'%3E%3Cpolygon points='45,25 49,36 60,36 51,43 54,54 45,47 36,54 39,43 30,36 41,36'/%3E%3Ccircle cx='135' cy='130' r='8'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* AGOSTO: Día de la Niñez */
+    body.tema-ninez {
+      --bazar-50: #f0fdfa;
+      --bazar-100: #ccfbf1;
+      --bazar-200: #99f6e4;
+      --bazar-300: #5eead4;
+      --bazar-400: #2dd4bf;
+      --bazar-500: #0d9488;
+      --bazar-600: #0f766e;
+      --bazar-700: #ea580c;
+      background-color: #f0fdfa;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' opacity='0.55'%3E%3Cpolygon points='45,25 49,36 60,36 51,43 54,54 45,47 36,54 39,43 30,36 41,36' fill='%23fde047'/%3E%3Ccircle cx='145' cy='60' r='10' stroke='%23fb923c' stroke-width='2.5'/%3E%3Crect x='110' y='135' width='18' height='18' rx='4' stroke='%2338bdf8' stroke-width='2.5' transform='rotate(15 119 144)'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* SEPTIEMBRE: Primavera */
+    body.tema-primavera {
+      --bazar-50: #f0fdf4;
+      --bazar-100: #dcfce7;
+      --bazar-200: #bbf7d0;
+      --bazar-300: #86efac;
+      --bazar-400: #4ade80;
+      --bazar-500: #16a34a;
+      --bazar-600: #15803d;
+      --bazar-700: #e11d48;
+      background-color: #f0fdf4;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg opacity='0.55'%3E%3Ccircle cx='50' cy='42' r='6' fill='%23f472b6'/%3E%3Ccircle cx='58' cy='50' r='6' fill='%23f472b6'/%3E%3Ccircle cx='50' cy='58' r='6' fill='%23f472b6'/%3E%3Ccircle cx='42' cy='50' r='6' fill='%23f472b6'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%23facc15'/%3E%3Ccircle cx='150' cy='142' r='5' fill='%23fb7185'/%3E%3Ccircle cx='157' cy='149' r='5' fill='%23fb7185'/%3E%3Ccircle cx='150' cy='156' r='5' fill='%23fb7185'/%3E%3Ccircle cx='143' cy='149' r='5' fill='%23fb7185'/%3E%3Ccircle cx='150' cy='149' r='4' fill='%23fde047'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* OCTUBRE: Día de la Madre */
+    body.tema-madre {
+      --bazar-50: #fdf2f8;
+      --bazar-100: #fce7f3;
+      --bazar-200: #fbcfe8;
+      --bazar-300: #f9a8d4;
+      --bazar-400: #f472b6;
+      --bazar-500: #db2777;
+      --bazar-600: #be185d;
+      --bazar-700: #9d174d;
+      background-color: #fdf2f8;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg opacity='0.5'%3E%3Ccircle cx='45' cy='40' r='7' fill='%23f472b6'/%3E%3Ccircle cx='53' cy='48' r='7' fill='%23f472b6'/%3E%3Ccircle cx='45' cy='56' r='7' fill='%23f472b6'/%3E%3Ccircle cx='37' cy='48' r='7' fill='%23f472b6'/%3E%3Ccircle cx='45' cy='48' r='5' fill='%23fde047'/%3E%3Cpath d='M145 135c-4-6-11-4-11 2 0 6 11 13 11 13s11-7 11-13c0-6-7-8-11-2z' fill='%23ec4899'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* FIN DE OCTUBRE: Halloween */
+    body.tema-halloween {
+      --bazar-50: #fff7ed;
+      --bazar-100: #ffedd5;
+      --bazar-200: #fed7aa;
+      --bazar-300: #fdba74;
+      --bazar-400: #fb923c;
+      --bazar-500: #ea580c;
+      --bazar-600: #c2410c;
+      --bazar-700: #6b21a8;
+      background-color: #fff7ed;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' opacity='0.45'%3E%3Cellipse cx='50' cy='52' rx='14' ry='11' fill='%23fb923c'/%3E%3Cpath d='M50 38v4' stroke='%2315803d' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M130 140q10-8 20 0q10-8 20 0' stroke='%237e22ce' stroke-width='2.5' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* NOVIEMBRE / DICIEMBRE: Navidad */
     body.tema-navidad {
       --bazar-50: #ffd6e5;
       --bazar-100: #ffe8f0;
@@ -57,28 +188,29 @@
       --bazar-500: #d91b42;
       --bazar-600: #9f1239;
       --bazar-700: #15803d;
-      
       background-color: #ffd6e5;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none'%3E%3Cg stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' opacity='0.65'%3E%3Cpath d='M45 20v36M27 38h36M32 25l26 26M58 25L32 51'/%3E%3Ccircle cx='45' cy='38' r='5' fill='%23ffd6e5'/%3E%3C/g%3E%3Cg stroke='%23f48fb1' stroke-width='2' stroke-linecap='round' opacity='0.55'%3E%3Cpath d='M185 155v30M170 170h30M174 159l22 22M196 159l-22 22'/%3E%3C/g%3E%3Cg transform='translate(145, 22) rotate(18)' opacity='0.85'%3E%3Cpath d='M8 32V12a8 8 0 0 1 16 0v4' stroke='%23ffffff' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M8 32V12a8 8 0 0 1 16 0v4' stroke='%23dc2626' stroke-width='7' stroke-linecap='round' stroke-dasharray='5 6'/%3E%3C/g%3E%3Cg transform='translate(195, 75) rotate(-15)' opacity='0.85'%3E%3Crect x='0' y='6' width='24' height='22' rx='3' fill='%2315803d'/%3E%3Cpath d='M12 6v22M0 17h24' stroke='%23ffffff' stroke-width='2.5'/%3E%3Cpath d='M12 6c-4-5-9-2-6 1h6zm0 0c4-5 9-2 6 1h-6z' stroke='%23ffffff' stroke-width='2'/%3E%3C/g%3E%3Cg transform='translate(105, 105)' opacity='0.85'%3E%3Crect x='11' y='0' width='6' height='4' rx='1' fill='%23eab308'/%3E%3Ccircle cx='14' cy='17' r='13' fill='%2315803d'/%3E%3Cpath d='M2 17q6-5 12 0t12 0' stroke='%23dc2626' stroke-width='3.5' fill='none'/%3E%3Ccircle cx='9' cy='11' r='1.5' fill='%23ffffff'/%3E%3Ccircle cx='19' cy='23' r='1.5' fill='%23ffffff'/%3E%3C/g%3E%3Cg transform='translate(28, 155) rotate(-12)' opacity='0.85'%3E%3Cpath d='M8 4h14v18c0 6-4 10-12 10H4a5 5 0 0 1 0-10h4V4z' fill='%23dc2626'/%3E%3Crect x='6' y='2' width='18' height='6' rx='3' fill='%23ffffff'/%3E%3C/g%3E%3Cpath d='M105 32l3 8 8 3-8 3-3 8-3-8-8-3 8-3z' fill='%23ffffff' opacity='0.75'/%3E%3Cpath d='M45 108l2.5 6.5 6.5 2.5-6.5 2.5-2.5 6.5-2.5-6.5-6.5-2.5 6.5-2.5z' fill='%23ffffff' opacity='0.75'/%3E%3Cpath d='M138 195l3 7 7 3-7 3-3 7-3-7-7-3 7-3z' fill='%23ffffff' opacity='0.75'/%3E%3Cpath d='M82 78c-2-3-6-2-6 1 0 3 6 7 6 7s6-4 6-7c0-3-4-4-6-1z' fill='%23dc2626' opacity='0.75'/%3E%3Cpath d='M218 215c-2-3-6-2-6 1 0 3 6 7 6 7s6-4 6-7c0-3-4-4-6-1z' fill='%23f43f5e' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 240px 240px;
     }
 
-    @keyframes caerEstrellas {
+    /* ==========================================================================
+       2. ANIMACIONES DE PARTÍCULAS FLOTANTES Y LUCES NAVIDEÑAS
+       ========================================================================== */
+    @keyframes caerParticulas {
       0% { transform: translateY(-10vh) rotate(0deg) scale(0.9); opacity: 0; }
-      15% { opacity: 0.32; }
-      50% { opacity: 0.22; }
-      85% { opacity: 0.32; }
+      15% { opacity: 0.35; }
+      50% { opacity: 0.25; }
+      85% { opacity: 0.35; }
       100% { transform: translateY(105vh) rotate(220deg) scale(1); opacity: 0; }
     }
-    .estrella-cayendo {
+    .particula-cayendo {
       position: fixed;
       top: -20px;
       user-select: none;
       pointer-events: none;
       z-index: 5;
-      filter: drop-shadow(0 0 4px rgba(254, 240, 138, 0.65));
-      animation: caerEstrellas linear infinite;
+      animation: caerParticulas linear infinite;
     }
 
     .guirnalda {
@@ -124,7 +256,8 @@
 </head>
 <body class="bg-bazar-50 text-stone-800 min-h-screen flex flex-col font-sans transition-colors duration-500">
 
-  <div id="estrellasContainer"></div>
+  <!-- Contenedor dinámico para partículas flotantes (estrellas, corazones, pétalos, etc.) -->
+  <div id="particulasContainer"></div>
 
   <div id="toastMsg" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-stone-900/90 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg backdrop-blur transition-all duration-300 opacity-0 pointer-events-none">
     Enlace copiado
@@ -134,9 +267,10 @@
     ↑
   </button>
 
-  <div id="xmasBanner" class="hidden relative z-20 bg-gradient-to-r from-[#be123c] via-[#15803d] to-[#be123c] text-white text-center py-2 px-4 shadow-sm flex flex-wrap items-center justify-center gap-2">
-    <span class="font-festive text-2xl sm:text-3xl text-amber-200 drop-shadow leading-none pt-0.5">¡Feliz Navidad!</span>
-    <span class="text-xs font-medium text-white/95">✨ Descubrí los mejores regalos y deco en Al2 Bazar 🎄</span>
+  <!-- Banner superior dinámico para fechas festivas -->
+  <div id="festiveBanner" class="hidden relative z-20 text-white text-center py-2 px-4 shadow-sm flex flex-wrap items-center justify-center gap-2">
+    <span id="festiveBannerTitle" class="font-festive text-2xl sm:text-3xl text-amber-200 drop-shadow leading-none pt-0.5"></span>
+    <span id="festiveBannerSub" class="text-xs font-medium text-white/95"></span>
   </div>
 
   <header class="bg-white/95 backdrop-blur sticky top-0 z-40 border-b border-bazar-200 shadow-sm">
@@ -310,9 +444,17 @@
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_kibEnyrDJtfXOe195P1njvrA4PVmZFxqSrOJ9NRQnFxhKsA0HRDOM0_PmOqMEYcN/exec";
     const WHATSAPP_PHONE = "5491124529009";
-    const FORZAR_NAVIDAD = false;
     const STORAGE_KEY_CART = "al2_bazar_carrito_v1";
     const PRODUCTOS_POR_TANDA = 40;
+
+    // ==========================================================================
+    // CONTROL DE PRUEBA DE TEMÁTICAS:
+    // Dejalo en "" para que funcione automático según el calendario.
+    // Para probar una temática cualquier día, escribí uno de estos valores:
+    // "playa" | "valentin" | "pascuas" | "mayo" | "padre" | "bandera" |
+    // "julio" | "ninez" | "primavera" | "madre" | "halloween" | "navidad"
+    // ==========================================================================
+    const FORZAR_TEMATICA = "";
 
     let allProducts = [];
     let currentFiltered = [];
@@ -320,7 +462,7 @@
     let cart = [];
     let currentPhotoIndices = {};
     let currentZoomProduct = null;
-    let esEpocaNavidad = false;
+    let iconoSinFotoGlobal = '🌸';
     let touchStartX = 0;
 
     function mostrarToast(texto) {
@@ -333,21 +475,223 @@
       }, 2200);
     }
 
-    function verificarTematicaNavidad() {
+    /**
+     * Calcula el domingo de Pascua para cualquier año (Algoritmo de Meeus/Jones/Butcher)
+     */
+    function calcularDomingoPascua(year) {
+      const a = year % 19;
+      const b = Math.floor(year / 100);
+      const c = year % 100;
+      const d = Math.floor(b / 4);
+      const e = b % 4;
+      const f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = Math.floor((a + 11 * h + 22 * l) / 451);
+      const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
+      const day = ((h + l - 7 * m + 114) % 31) + 1;
+      return new Date(year, month, day);
+    }
+
+    /**
+     * Calcula el 3.º domingo de un mes dado (usado para Día del Padre, Niñez y Madre en Argentina)
+     */
+    function obtenerTercerDomingo(year, month) {
+      const primerDia = new Date(year, month, 1).getDay();
+      const primerDomingo = primerDia === 0 ? 1 : (8 - primerDia);
+      return new Date(year, month, primerDomingo + 14);
+    }
+
+    /**
+     * Devuelve cuántos días faltan desde 'hoy' hasta 'fechaObjetivo' (0 si es el mismo día)
+     */
+    function diasHasta(hoy, fechaObjetivo) {
+      const a = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+      const b = new Date(fechaObjetivo.getFullYear(), fechaObjetivo.getMonth(), fechaObjetivo.getDate());
+      return Math.round((b - a) / 86400000);
+    }
+
+    /**
+     * Detecta la temática activa (forzada o por calendario argentino) y aplica
+     * colores, banner, ícono de marca, guirnalda y partículas flotantes.
+     */
+    function aplicarTematicaFestiva() {
       const hoy = new Date();
-      const mes = hoy.getMonth();
+      const anio = hoy.getFullYear();
+      const mes = hoy.getMonth(); // 0=Ene, 1=Feb, 4=May, 5=Jun, 6=Jul, 7=Ago, 8=Sep, 9=Oct, 10=Nov, 11=Dic
       const dia = hoy.getDate();
 
-      const enRangoNavidad = (mes === 10 && dia >= 15) || (mes === 11) || (mes === 0 && dia === 1);
-      esEpocaNavidad = FORZAR_NAVIDAD || enRangoNavidad;
+      let tema = FORZAR_TEMATICA.trim().toLowerCase();
 
-      if (esEpocaNavidad) {
-        document.body.classList.add('tema-navidad');
-        document.getElementById('xmasBanner').classList.remove('hidden');
-        document.getElementById('brandTitle').innerHTML = 'Al2 Bazar <span class="text-xl">🎅</span>';
-        generarLucesNavidad();
-        generarEstrellas();
+      if (!tema) {
+        const pascua = calcularDomingoPascua(anio);
+        const diffPascua = diasHasta(hoy, pascua);
+        const diaPadre = obtenerTercerDomingo(anio, 5); // Junio
+        const diffPadre = diasHasta(hoy, diaPadre);
+        const diaNinez = obtenerTercerDomingo(anio, 7); // Agosto
+        const diffNinez = diasHasta(hoy, diaNinez);
+        const diaMadre = obtenerTercerDomingo(anio, 9); // Octubre
+        const diffMadre = diasHasta(hoy, diaMadre);
+
+        if ((mes === 10 && dia >= 15) || mes === 11 || (mes === 0 && dia === 1)) {
+          tema = 'navidad';
+        } else if (mes === 0 && dia >= 2) {
+          tema = 'playa';
+        } else if (mes === 1 && dia <= 15) {
+          tema = 'valentin';
+        } else if (diffPascua >= 0 && diffPascua <= 10) {
+          tema = 'pascuas';
+        } else if (mes === 4 && dia >= 18 && dia <= 25) {
+          tema = 'mayo';
+        } else if (mes === 5 && (dia === 19 || dia === 20)) {
+          tema = 'bandera';
+        } else if (diffPadre >= 0 && diffPadre <= 12) {
+          tema = 'padre';
+        } else if (mes === 6 && dia >= 2 && dia <= 9) {
+          tema = 'julio';
+        } else if (diffNinez >= 0 && diffNinez <= 12) {
+          tema = 'ninez';
+        } else if (mes === 8 && dia >= 15 && dia <= 28) {
+          tema = 'primavera';
+        } else if (diffMadre >= 0 && diffMadre <= 14) {
+          tema = 'madre';
+        } else if ((mes === 9 && dia >= 25) || (mes === 10 && dia === 1)) {
+          tema = 'halloween';
+        }
       }
+
+      const configs = {
+        playa: {
+          claseBody: 'tema-playa',
+          bannerGradiente: 'from-[#0891b2] via-[#06b6d4] to-[#f59e0b]',
+          titulo: '¡Modo Verano & Playa!',
+          subtitulo: '☀️ Termos, lonas, botellas y todo para disfrutar el aire libre 🏖️',
+          emojiMarca: '🏖️',
+          emojiSinFoto: '☀️',
+          particula: 'sol'
+        },
+        valentin: {
+          claseBody: 'tema-valentin',
+          bannerGradiente: 'from-[#be123c] via-[#e11d48] to-[#be123c]',
+          titulo: '¡Feliz San Valentín!',
+          subtitulo: '❤️ Regalos especiales y detalles para enamorar 💕',
+          emojiMarca: '💘',
+          emojiSinFoto: '❤️',
+          particula: 'corazon'
+        },
+        pascuas: {
+          claseBody: 'tema-pascuas',
+          bannerGradiente: 'from-[#7e22ce] via-[#a855f7] to-[#eab308]',
+          titulo: '¡Felices Pascuas!',
+          subtitulo: '🐰 Moldes, deco y detalles dulces para compartir en familia 🐣',
+          emojiMarca: '🐰',
+          emojiSinFoto: '🐣',
+          particula: 'estrella'
+        },
+        mayo: {
+          claseBody: 'tema-patria',
+          bannerGradiente: 'from-[#0284c7] via-[#38bdf8] to-[#0284c7]',
+          titulo: '¡Viva la Patria! · 25 de Mayo',
+          subtitulo: '🇦🇷 Todo para compartir mates, pastelitos y mesa argentina ☀️',
+          emojiMarca: '🇦🇷',
+          emojiSinFoto: '🇦🇷',
+          particula: 'sol'
+        },
+        bandera: {
+          claseBody: 'tema-patria',
+          bannerGradiente: 'from-[#0284c7] via-[#38bdf8] to-[#0284c7]',
+          titulo: 'Día de la Bandera · 20 de Junio',
+          subtitulo: '🇦🇷 Celebramos nuestros colores con los mejores productos ☀️',
+          emojiMarca: '🇦🇷',
+          emojiSinFoto: '🇦🇷',
+          particula: 'sol'
+        },
+        julio: {
+          claseBody: 'tema-patria',
+          bannerGradiente: 'from-[#0284c7] via-[#38bdf8] to-[#0284c7]',
+          titulo: '¡Feliz Día de la Independencia! · 9 de Julio',
+          subtitulo: '🇦🇷 Equipá tu cocina y tu mesa para festejar en familia ☀️',
+          emojiMarca: '🇦🇷',
+          emojiSinFoto: '🇦🇷',
+          particula: 'sol'
+        },
+        padre: {
+          claseBody: 'tema-padre',
+          bannerGradiente: 'from-[#172554] via-[#1e3a8a] to-[#b45309]',
+          titulo: '¡Feliz Día del Padre!',
+          subtitulo: '👔 Set materos, chopps, asado y regalos pensados para papá 🎁',
+          emojiMarca: '👔',
+          emojiSinFoto: '🎁',
+          particula: 'estrella'
+        },
+        ninez: {
+          claseBody: 'tema-ninez',
+          bannerGradiente: 'from-[#0f766e] via-[#14b8a6] to-[#ea580c]',
+          titulo: '¡Feliz Día de la Niñez!',
+          subtitulo: '🎈 Botellas, luncheras, juegos y sorpresas para los más chicos 🧸',
+          emojiMarca: '🎈',
+          emojiSinFoto: '🧸',
+          particula: 'estrella'
+        },
+        primavera: {
+          claseBody: 'tema-primavera',
+          bannerGradiente: 'from-[#15803d] via-[#22c55e] to-[#e11d48]',
+          titulo: '¡Feliz Primavera!',
+          subtitulo: '🌸 Llená de color tu casa, tu jardín y tus salidas al sol 🌿',
+          emojiMarca: '🌸',
+          emojiSinFoto: '🌸',
+          particula: 'flor'
+        },
+        madre: {
+          claseBody: 'tema-madre',
+          bannerGradiente: 'from-[#9d174d] via-[#db2777] to-[#f472b6]',
+          titulo: '¡Feliz Día de la Madre!',
+          subtitulo: '💐 Regalos únicos y deco hermosa para mimar a mamá 💖',
+          emojiMarca: '💐',
+          emojiSinFoto: '💐',
+          particula: 'flor'
+        },
+        halloween: {
+          claseBody: 'tema-halloween',
+          bannerGradiente: 'from-[#581c87] via-[#ea580c] to-[#581c87]',
+          titulo: '¡Especial Halloween!',
+          subtitulo: '🎃 Deco temática, vasos y accesorios para la noche más divertida 👻',
+          emojiMarca: '🎃',
+          emojiSinFoto: '🎃',
+          particula: 'estrella'
+        },
+        navidad: {
+          claseBody: 'tema-navidad',
+          bannerGradiente: 'from-[#be123c] via-[#15803d] to-[#be123c]',
+          titulo: '¡Feliz Navidad!',
+          subtitulo: '✨ Descubrí los mejores regalos y deco en Al2 Bazar 🎄',
+          emojiMarca: '🎅',
+          emojiSinFoto: '🎄',
+          particula: 'estrella',
+          conLuces: true
+        }
+      };
+
+      const activa = configs[tema];
+      if (!activa) return;
+
+      document.body.classList.add(activa.claseBody);
+      iconoSinFotoGlobal = activa.emojiSinFoto;
+
+      const banner = document.getElementById('festiveBanner');
+      banner.className = `relative z-20 bg-gradient-to-r ${activa.bannerGradiente} text-white text-center py-2 px-4 shadow-sm flex flex-wrap items-center justify-center gap-2`;
+      document.getElementById('festiveBannerTitle').textContent = activa.titulo;
+      document.getElementById('festiveBannerSub').textContent = activa.subtitulo;
+
+      document.getElementById('brandTitle').innerHTML = `Al2 Bazar <span class="text-xl">${activa.emojiMarca}</span>`;
+
+      if (activa.conLuces) {
+        generarLucesNavidad();
+      }
+      generarParticulas(activa.particula);
     }
 
     function generarLucesNavidad() {
@@ -361,25 +705,37 @@
       }
     }
 
-    function generarEstrellas() {
-      const container = document.getElementById('estrellasContainer');
-      const colores = ['#fef08a', '#fde047', '#ffffff'];
+    /**
+     * Genera partículas flotantes suaves acordes a la temática activa
+     */
+    function generarParticulas(tipo) {
+      const container = document.getElementById('particulasContainer');
+      const paletas = {
+        estrella: ['#fef08a', '#fde047', '#ffffff'],
+        corazon: ['#fb7185', '#f43f5e', '#fda4af'],
+        flor: ['#f472b6', '#fda4af', '#fef08a'],
+        sol: ['#fde047', '#facc15', '#38bdf8']
+      };
+      const colores = paletas[tipo] || paletas.estrella;
       
-      for (let i = 0; i < 22; i++) {
+      for (let i = 0; i < 20; i++) {
         const div = document.createElement('div');
-        div.className = 'estrella-cayendo';
-        const esChispita = i % 3 === 0;
-        const size = esChispita ? (Math.random() * 7 + 7) : (Math.random() * 11 + 10);
+        div.className = 'particula-cayendo';
+        const size = Math.random() * 10 + 10;
         const color = colores[i % colores.length];
         
-        if (esChispita) {
-          div.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/></svg>`;
+        if (tipo === 'corazon') {
+          div.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+        } else if (tipo === 'flor') {
+          div.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><circle cx="12" cy="6" r="4"/><circle cx="18" cy="12" r="4"/><circle cx="12" cy="18" r="4"/><circle cx="6" cy="12" r="4"/><circle cx="12" cy="12" r="3" fill="#ffffff"/></svg>`;
+        } else if (tipo === 'sol') {
+          div.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><circle cx="12" cy="12" r="6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="${color}" stroke-width="2" stroke-linecap="round"/></svg>`;
         } else {
           div.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><polygon points="12,2 15,9 22,9.5 16.5,14 18.2,21 12,17.2 5.8,21 7.5,14 2,9.5 9,9"/></svg>`;
         }
         
         div.style.left = (Math.random() * 96) + 'vw';
-        div.style.animationDuration = (Math.random() * 9 + 9) + 's';
+        div.style.animationDuration = (Math.random() * 9 + 10) + 's';
         div.style.animationDelay = (Math.random() * 7) + 's';
         container.appendChild(div);
       }
@@ -420,7 +776,7 @@
     }
 
     async function cargarCatalogo() {
-      verificarTematicaNavidad();
+      aplicarTematicaFestiva();
       restaurarCarritoGuardado();
 
       const status = document.getElementById('statusMessage');
@@ -451,7 +807,6 @@
           const esNuevo = /\b(nuevo|nueva|nuevos|nuevas|ingreso|novedad)\b/.test(nombreNorm) || 
                           /\b(nuevo|nueva|nuevos|nuevas|ingreso|novedad)\b/.test(etiquetaNorm);
 
-          // Usa el texto de la columna Etiqueta o "OFERTA" / "NUEVO" (sin porcentaje)
           let etiquetaFinal = p.etiqueta ? p.etiqueta.trim().toUpperCase() : '';
           if (!etiquetaFinal) {
             if (esOferta) etiquetaFinal = 'OFERTA';
@@ -588,8 +943,6 @@
         return;
       }
 
-      const iconoSinFoto = esEpocaNavidad ? '🎄' : '🌸';
-
       grid.innerHTML = aMostrar.map(p => {
         const fotos = p.fotos && p.fotos.length > 0 ? p.fotos : [];
         if (!(p.id in currentPhotoIndices)) currentPhotoIndices[p.id] = 0;
@@ -599,7 +952,6 @@
         const badgeColor = p.esNuevo && !p.esOferta ? 'bg-emerald-500' : 'bg-amber-500';
         const badgeIcon = p.esNuevo && !p.esOferta ? '✨' : '🔥';
 
-        // Precio anterior tachado arriba y precio oferta destacado abajo (sin porcentaje)
         const bloquePrecioHTML = p.tienePrecioRebajado ? `
           <div class="flex flex-col leading-tight">
             <span class="text-[11px] text-stone-400 line-through">$${p.precioOriginal.toLocaleString('es-AR')}</span>
@@ -638,7 +990,7 @@
                   ` : ''}
                 ` : `
                   <div class="flex flex-col items-center justify-center text-bazar-300">
-                    <span class="text-3xl">${iconoSinFoto}</span>
+                    <span class="text-3xl">${iconoSinFotoGlobal}</span>
                     <span class="text-[10px] text-stone-400 mt-1">Al2 Bazar</span>
                   </div>
                 `}
